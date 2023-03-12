@@ -2,10 +2,10 @@ import { IGenericDAO } from './IGenericDAO'
 import { Db, Collection, Document, ObjectId, FindCursor } from 'mongodb'
 
 export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
-  public readonly _collection: Collection<T>
+  public readonly _collection: Collection
 
   constructor(db: Db, collectionName: string) {
-    this._collection = db.collection<T>(collectionName)
+    this._collection = db.collection(collectionName)
   }
 
   async create(obj: T): Promise<string> {
