@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb'
-import { User } from './src/models/User'
-import { UserDAO } from './src/dao/UserDAO'
+import { User } from './models/User'
+import { UserDAO } from './dao/UserDAO'
 import { faker } from '@faker-js/faker'
 
 const main = async () => {

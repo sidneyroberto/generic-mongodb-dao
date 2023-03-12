@@ -1,6 +1,6 @@
 {
   "name": "generic-mongodb-dao",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Generic DAO for MongoDB",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
