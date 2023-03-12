@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
-const User_1 = require("./src/models/User");
-const UserDAO_1 = require("./src/dao/UserDAO");
+const User_1 = require("./models/User");
+const UserDAO_1 = require("./dao/UserDAO");
 const faker_1 = require("@faker-js/faker");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const connection = yield mongodb_1.MongoClient.connect('mongodb://localhost');
