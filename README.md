@@ -51,7 +51,7 @@ class UserDAO extends GenericDAO<User> {
 const user1 = new User(
   'Dwight Schrute',
   'dwight@dundermifflin.com',
-  '1970-01-20'
+  new Date('1970-01-20')
 )
 
 const connection = await MongoClient.connect('mongodb://localhost')
