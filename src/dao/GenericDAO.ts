@@ -1,5 +1,13 @@
 import { IGenericDAO } from './IGenericDAO'
-import { Db, Collection, Document, ObjectId, FindCursor } from 'mongodb'
+import {
+  Db,
+  Collection,
+  Document,
+  ObjectId,
+  FindCursor,
+  Filter,
+  OptionalUnlessRequiredId,
+} from 'mongodb'
 
 export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
   public readonly _collection: Collection<T>
@@ -9,12 +17,14 @@ export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
   }
 
   async create(obj: T): Promise<string> {
-    const result = await this._collection.insertOne(obj)
+    const result = await this._collection.insertOne(
+      obj as OptionalUnlessRequiredId<T>
+    )
     return result.insertedId.toString()
   }
 
   async update(id: string, obj: any): Promise<boolean> {
-    const filter = { _id: new ObjectId(id) }
+    const filter = { _id: new ObjectId(id) } as Filter<T>
     const options = { upsert: false }
     const result = await this._collection.updateOne(
       filter,
@@ -25,13 +35,13 @@ export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
   }
 
   async delete(id: string): Promise<boolean> {
-    const filter = { _id: new ObjectId(id) }
+    const filter = { _id: new ObjectId(id) } as Filter<T>
     const result = await this._collection.deleteOne(filter)
     return result.deletedCount > 0
   }
 
   async findOne(id: string): Promise<T> {
-    const filter = { _id: new ObjectId(id) }
+    const filter = { _id: new ObjectId(id) } as Filter<T>
     const result = (await this._collection.findOne(filter)) as unknown as T
     return result
   }
