@@ -46,5 +46,19 @@ export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
     return result
   }
 
-  protected _fetchCursor?(cursor: FindCursor): Promise<T[]>
+  async find(criteria: any, options?: any): Promise<T[]> {
+    const opt = options ? options : {}
+    const cursor = this._collection.find(criteria, opt)
+    const documents = await this._fetchCursor(cursor)
+    return documents
+  }
+
+  protected async _fetchCursor(cursor: FindCursor): Promise<T[]> {
+    const documents: T[] = []
+    await cursor.forEach((d) => {
+      documents.push(d as T)
+    })
+
+    return documents
+  }
 }

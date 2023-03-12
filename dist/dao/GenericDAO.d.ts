@@ -7,5 +7,6 @@ export declare abstract class GenericDAO<T extends Document> implements IGeneric
     update(id: string, obj: any): Promise<boolean>;
     delete(id: string): Promise<boolean>;
     findOne(id: string): Promise<T>;
-    protected _fetchCursor?(cursor: FindCursor): Promise<T[]>;
+    find(criteria: any, options?: any): Promise<T[]>;
+    protected _fetchCursor(cursor: FindCursor): Promise<T[]>;
 }

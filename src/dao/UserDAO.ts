@@ -9,24 +9,11 @@ export class UserDAO extends GenericDAO<User> {
   }
 
   async findByBirthdayPeriod(start: Date, end: Date) {
-    const cursor = this._collection.find({
+    const users = await this.find({
       birthday: {
         $gte: start,
         $lte: end,
       },
-    })
-
-    const users = await this._fetchCursor(cursor)
-    return users
-  }
-
-  protected async _fetchCursor(cursor: FindCursor): Promise<User[]> {
-    const users: User[] = []
-    await cursor.forEach((result) => {
-      const { _id, name, email, birthday } = result
-      const user = new User(name, email, birthday)
-      ;(user as any)._id = _id
-      users.push(user)
     })
 
     return users

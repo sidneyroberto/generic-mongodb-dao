@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserDAO = void 0;
-const User_1 = require("../models/User");
 const GenericDAO_1 = require("./GenericDAO");
 class UserDAO extends GenericDAO_1.GenericDAO {
     constructor(db) {
@@ -18,24 +17,11 @@ class UserDAO extends GenericDAO_1.GenericDAO {
     }
     findByBirthdayPeriod(start, end) {
         return __awaiter(this, void 0, void 0, function* () {
-            const cursor = this._collection.find({
+            const users = yield this.find({
                 birthday: {
                     $gte: start,
                     $lte: end,
                 },
-            });
-            const users = yield this._fetchCursor(cursor);
-            return users;
-        });
-    }
-    _fetchCursor(cursor) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const users = [];
-            yield cursor.forEach((result) => {
-                const { _id, name, email, birthday } = result;
-                const user = new User_1.User(name, email, birthday);
-                user._id = _id;
-                users.push(user);
             });
             return users;
         });

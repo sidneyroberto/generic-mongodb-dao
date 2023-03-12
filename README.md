@@ -21,7 +21,7 @@ public create(obj: T): Promise<string>
 public update(id: string, obj: any): Promise<boolean>
 public  delete(id: string): Promise<boolean>
 public findOne(id: string): Promise<T>
-protected _fetchCursor?(cursor: FindCursor): Promise<T[]>
+public find(criteria: any, options?: any): Promise<T[]>
 ```
 
 Example of use:
@@ -65,6 +65,14 @@ console.log(id)
 const currentUser = await dao.findOne(id)
 console.log(currentUser)
 
+const users = await dao.find({
+  name: {
+    $regex: 'dwight',
+    $options: 'i',
+  },
+})
+console.log(users)
+
 const updated = await dao.update(id, {
   email: 'salesman_number1@dundermifflin.com',
 })
@@ -74,7 +82,7 @@ const deleted = await dao.delete(id)
 console.log(deleted)
 ```
 
-Alternatively, you may implement custom methods. In case of find operations, you may implement `fetchCursor` method:
+Using `find` method, you may implement custom query methods:
 
 ```ts
 import { Db, FindCursor } from 'mongodb'
@@ -88,24 +96,11 @@ export class UserDAO extends GenericDAO<User> {
   }
 
   async findByBirthdayPeriod(start: Date, end: Date) {
-    const cursor = this._collection.find({
+    const users = await this.find({
       birthday: {
         $gte: start,
         $lte: end,
       },
-    })
-
-    const users = await this._fetchCursor(cursor)
-    return users
-  }
-
-  protected async _fetchCursor(cursor: FindCursor): Promise<User[]> {
-    const users: User[] = []
-    await cursor.forEach((result) => {
-      const { _id, name, email, birthday } = result
-      const user = new User(name, email, birthday)
-      ;(user as any)._id = _id
-      users.push(user)
     })
 
     return users

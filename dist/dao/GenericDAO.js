@@ -43,5 +43,22 @@ class GenericDAO {
             return result;
         });
     }
+    find(criteria, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const opt = options ? options : {};
+            const cursor = this._collection.find(criteria, opt);
+            const documents = yield this._fetchCursor(cursor);
+            return documents;
+        });
+    }
+    _fetchCursor(cursor) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const documents = [];
+            yield cursor.forEach((d) => {
+                documents.push(d);
+            });
+            return documents;
+        });
+    }
 }
 exports.GenericDAO = GenericDAO;
