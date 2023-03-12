@@ -1,6 +1,4 @@
-import { Document } from 'mongodb'
-
-export class User implements Document {
+export class User {
   name: string
   email: string
   birthday?: Date
