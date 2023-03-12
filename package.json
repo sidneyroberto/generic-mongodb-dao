@@ -1,0 +1,21 @@
+{
+  "name": "generic-mongodb-dao",
+  "version": "1.0.0",
+  "description": "A Generic DAO for MongoDB",
+  "main": "index.ts",
+  "repository": "https://github.com/sidneyroberto/generic-mongodb-dao",
+  "author": "Sidney Sousa",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "mongodb": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
