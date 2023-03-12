@@ -1,9 +1,7 @@
 import { IGenericDAO } from './IGenericDAO'
-import { Db, Collection, Document, ObjectId, WithId, FindCursor } from 'mongodb'
+import { Db, Collection, Document, ObjectId, FindCursor } from 'mongodb'
 
-export abstract class GenericDAO<T extends Document | WithId<Document>>
-  implements IGenericDAO<T>
-{
+export abstract class GenericDAO<T extends Document> implements IGenericDAO<T> {
   public readonly _collection: Collection
 
   constructor(db: Db, collectionName: string) {
@@ -34,7 +32,7 @@ export abstract class GenericDAO<T extends Document | WithId<Document>>
 
   async findOne(id: string): Promise<T> {
     const filter = { _id: new ObjectId(id) }
-    const result = (await this._collection.findOne(filter)) as T
+    const result = (await this._collection.findOne(filter)) as unknown as T
     return result
   }
 
